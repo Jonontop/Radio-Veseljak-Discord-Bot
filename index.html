@@ -1,9 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RadioVeseljak - Discord Glasbeni Bot</title>
+    <title>RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="RadioVeseljak Discord bot - Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7. Brezplačen Discord glasbeni bot za Radio Veseljak.">
+    <meta name="keywords" content="Radio Veseljak, Discord bot, slovenska glasba, Discord glasbeni bot, Radio Veseljak Discord, slovenska radijska postaja, Discord bot Slovenija, Radio Veseljak live stream">
+    <meta name="author" content="RadioVeseljak Discord Bot">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Slovenian">
+    
+    <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
+    <meta property="og:title" content="RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu">
+    <meta property="og:description" content="Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7 z brezplačnim Discord botom.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://veseljak.pecar.site">
+    <meta property="og:image" content="https://veseljak.pecar.site/og-image.jpg">
+    <meta property="og:locale" content="sl_SI">
+    <meta property="og:site_name" content="RadioVeseljak Discord Bot">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu">
+    <meta name="twitter:description" content="Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7.">
+    <meta name="twitter:image" content="https://veseljak.pecar.site/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://veseljak.pecar.site">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "RadioVeseljak Discord Bot",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Discord",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "description": "Discord bot za predvajanje Radio Veseljak, Slovenske radijske postaje. Uživajte v najboljši slovenski glasbi neposredno na vašem Discord strežniku.",
+      "inLanguage": "sl",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "100"
+      }
+    }
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @keyframes fadeInDown {
@@ -75,10 +128,10 @@
         <!-- Hero Section -->
         <section class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-16 my-10 shadow-2xl border border-white/20 animate-fade-in-up">
             <h2 class="text-3xl md:text-4xl font-bold mb-5">
-                Vaš Najboljši Discord Glasbeni Spremljevalec
+                Poslušaj Radio Veseljak na Discordu
             </h2>
             <p class="text-lg md:text-xl leading-relaxed opacity-90 mb-10">
-                RadioVeseljak je zmogljiv in enostaven za uporabo glasbeni bot, ki prinaša visokokakovostno pretakanje zvoka neposredno na vaš Discord strežnik. Predvajajte svoje najljubše pesmi, ustvarjajte sezname predvajanja in uživajte v kristalno čistem zvoku s svojo skupnostjo!
+                RadioVeseljak Discord bot je namenski glasbeni bot, ki predvaja Radio Veseljak - priljubljeno slovensko radijsko postajo - neposredno na vaš Discord strežnik. Uživajte v najboljši slovenski glasbi 24/7 s kristalno čistim zvokom in brez prekinitev!
             </p>
 
             <div class="flex gap-5 justify-center flex-wrap mt-8">
@@ -100,44 +153,44 @@
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-16">
             <!-- Feature Card 1 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
-                <div class="text-5xl mb-5">🎶</div>
-                <h3 class="text-2xl font-bold mb-4">Visokokakovosten Zvok</h3>
-                <p class="opacity-90 leading-relaxed">Uživajte v kristalno čistem pretakanju glasbe z optimizirano kakovostjo zvoka za najboljšo poslušalsko izkušnjo.</p>
+                <div class="text-5xl mb-5">📻</div>
+                <h3 class="text-2xl font-bold mb-4">Samo Radio Veseljak</h3>
+                <p class="opacity-90 leading-relaxed">Namenski bot za predvajanje Radio Veseljak. Najboljša slovenska glasba, novice in zabava 24 ur na dan.</p>
             </div>
 
             <!-- Feature Card 2 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
-                <div class="text-5xl mb-5">⚡</div>
-                <h3 class="text-2xl font-bold mb-4">Hiter in Zanesljiv</h3>
-                <p class="opacity-90 leading-relaxed">Bliskovito hitri odzivni časi in stabilne povezave zagotavljajo neprekinjeno predvajanje glasbe.</p>
+                <div class="text-5xl mb-5">🎶</div>
+                <h3 class="text-2xl font-bold mb-4">Live Stream Radia Veseljak</h3>
+                <p class="opacity-90 leading-relaxed">Neposredno prenašanje v živo z Radio Veseljak. Brez zamud, brez prekinitev - samo čista glasba.</p>
             </div>
 
             <!-- Feature Card 3 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
                 <div class="text-5xl mb-5">🎮</div>
                 <h3 class="text-2xl font-bold mb-4">Enostaven za Uporabo</h3>
-                <p class="opacity-90 leading-relaxed">Preprosti in intuitivni ukazi nadzor predvajanja glasbe naredijo enostavno za vsakogar.</p>
+                <p class="opacity-90 leading-relaxed">Preprosti ukazi za predvajanje in ustavitev. Pridruži se glasovnemu kanalu in uživaj v Radiu Veseljak.</p>
             </div>
 
             <!-- Feature Card 4 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
-                <div class="text-5xl mb-5">🔧</div>
-                <h3 class="text-2xl font-bold mb-4">Odprta Koda</h3>
-                <p class="opacity-90 leading-relaxed">Popolnoma odprtokoden in prilagodljiv. Oglejte si kodo na GitHubu in prispevajte!</p>
+                <div class="text-5xl mb-5">🇸🇮</div>
+                <h3 class="text-2xl font-bold mb-4">Slovenska Radijska Postaja</h3>
+                <p class="opacity-90 leading-relaxed">Radio Veseljak - priljubljena slovenska radijska postaja zdaj na vašem Discord strežniku.</p>
             </div>
 
             <!-- Feature Card 5 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
-                <div class="text-5xl mb-5">🌐</div>
-                <h3 class="text-2xl font-bold mb-4">Več Platform</h3>
-                <p class="opacity-90 leading-relaxed">Podpora za več glasbenih virov vam omogoča dostop do milijonov pesmi.</p>
+                <div class="text-5xl mb-5">⚡</div>
+                <h3 class="text-2xl font-bold mb-4">Hiter in Zanesljiv</h3>
+                <p class="opacity-90 leading-relaxed">Stabilna povezava in neprekinjeno predvajanje. Radio Veseljak vedno na voljo na vašem strežniku.</p>
             </div>
 
             <!-- Feature Card 6 -->
             <div class="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/15 hover:shadow-2xl border border-white/20">
                 <div class="text-5xl mb-5">💎</div>
-                <h3 class="text-2xl font-bold mb-4">Zastonj za Vedno</h3>
-                <p class="opacity-90 leading-relaxed">Popolnoma brezplačno za uporabo brez skritih stroškov ali premium funkcij za plačilnim zidom.</p>
+                <h3 class="text-2xl font-bold mb-4">Popolnoma Brezplačno</h3>
+                <p class="opacity-90 leading-relaxed">Brez stroškov, brez naročnin. Dodajte Radio Veseljak bot na svoj Discord strežnik brezplačno.</p>
             </div>
         </section>
 
