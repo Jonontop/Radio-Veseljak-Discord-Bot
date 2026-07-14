@@ -52,3 +52,4 @@ async def stop(ctx):
 bot.run(TOKEN)
 
 ```
+- Implemented Docker integration for easier installation and managing uptime via kubernetes

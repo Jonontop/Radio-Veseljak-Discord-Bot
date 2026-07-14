@@ -1,7 +1,9 @@
+import os
 import discord
+from discord import app_commands
 from discord.ext import commands
 
-TOKEN = "TOKEN_HERE"
+TOKEN = os.getenv("DISCORD_TOKEN")
 RADIO_URL = "https://live.radio.si/Veseljak?t=1758375904462"  # Example radio stream
 
 intents = discord.Intents.default()
