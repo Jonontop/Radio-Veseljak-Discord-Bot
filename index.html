@@ -1,236 +1,410 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="sl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="RadioVeseljak Discord bot - Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7. Brezplačen Discord glasbeni bot za Radio Veseljak.">
-    <meta name="keywords" content="Radio Veseljak, Discord bot, slovenska glasba, Discord glasbeni bot, Radio Veseljak Discord, slovenska radijska postaja, Discord bot Slovenija, Radio Veseljak live stream">
-    <meta name="author" content="RadioVeseljak Discord Bot">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Slovenian">
-    
-    <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
-    <meta property="og:title" content="RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu">
-    <meta property="og:description" content="Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7 z brezplačnim Discord botom.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://veseljak.pecar.site">
-    <meta property="og:image" content="https://veseljak.pecar.site/og-image.jpg">
-    <meta property="og:locale" content="sl_SI">
-    <meta property="og:site_name" content="RadioVeseljak Discord Bot">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="RadioVeseljak Discord Bot - Poslušaj Radio Veseljak na Discordu">
-    <meta name="twitter:description" content="Predvajaj Radio Veseljak neposredno na svojem Discord strežniku. Najboljša slovenska glasba 24/7.">
-    <meta name="twitter:image" content="https://veseljak.pecar.site/twitter-image.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://veseljak.pecar.site">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "RadioVeseljak Discord Bot",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "Discord",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR"
-      },
-      "description": "Discord bot za predvajanje Radio Veseljak, Slovenske radijske postaje. Uživajte v najboljši slovenski glasbi neposredno na vašem Discord strežniku.",
-      "inLanguage": "sl",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "ratingCount": "100"
-      }
-    }
+    <title>Veseljak Radio — Discord Bot</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0A0E12',       // Izjemno čisto, skoraj črno ozadje
+                            card: '#121820',     // Elegantna temno siva za kartice in modale
+                            border: '#1E293B',   // Prefinjene obrobe
+                        },
+                        brand: {
+                            green: '#1E5E3A',    // Klasična Veseljakova temno zelena
+                            accent: '#84CC16',   // Sveža limeta/svetlo zelena za poudarke in gumb
+                            muted: '#94A3B8',    // Srebrno-siva za pomožno besedilo
+                        }
+                    }
+                }
+            }
+        }
     </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Inter Pisava za premium izgled -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body {
+            font-family: 'Inter', sans-serif;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Custom scrollbar za lepši izgled v modalu */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
         }
-
-        .animate-fade-in-down {
-            animation: fadeInDown 1s ease;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121820;
         }
-
-        .animate-fade-in-up {
-            animation: fadeInUp 1s ease;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 3px;
         }
-
-        .btn-ripple {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-ripple::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-ripple:hover::before {
-            width: 300px;
-            height: 300px;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #84CC16;
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d4a1e] to-[#1a1a1a] text-white overflow-x-hidden">
-    <div class="max-w-6xl mx-auto px-5">
-        <!-- Header -->
-        <header class="pt-16 pb-10 text-center animate-fade-in-down">
-            <div class="text-5xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent drop-shadow-lg">
-                🎵 RadioVeseljak
+<body class="bg-dark-bg text-slate-100 min-h-screen flex flex-col antialiased">
+
+    <!-- Navigacija -->
+    <header class="sticky top-0 z-50 bg-dark-bg/80 backdrop-blur-md border-b border-dark-border/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- Logo sekcija -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="relative w-11 h-11 rounded-full overflow-hidden border-2 border-brand-accent/30 group-hover:border-brand-accent transition-colors duration-300">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA33i7LANDx4IHCBNJKzC2orbPPY7jEwkXWJen-cdBW4N14xB7wuIclFaK&s=10" 
+                         alt="Veseljak Radio Bot Logo" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg font-extrabold tracking-wider leading-none text-white">VESELJAK</span>
+                    <span class="text-xs font-semibold tracking-widest text-brand-accent mt-0.5">RADIO BOT</span>
+                </div>
+            </a>
+
+            <!-- Povezave (Odpirajo popup) -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-brand-muted">
+                <a href="#features" class="hover:text-white transition-colors">Funkcije</a>
+                <a href="javascript:void(0)" onclick="openModal('support-modal')" class="hover:text-white transition-colors">Podpora</a>
+                <a href="javascript:void(0)" onclick="openModal('tos-modal')" class="hover:text-white transition-colors">Splošni pogoji</a>
+                <a href="javascript:void(0)" onclick="openModal('privacy-modal')" class="hover:text-white transition-colors">Zasebnost</a>
+            </nav>
+
+            <!-- CTA Gumb v navigaciji -->
+            <div>
+                <a href="https://discord.com/oauth2/authorize?client_id=1373432110664384594&permissions=8&integration_type=0&scope=bot" class="bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-bold px-5 py-2.5 rounded-lg text-sm transition-all duration-200 shadow-lg shadow-brand-accent/10 hover:shadow-brand-accent/20">
+                    Dodaj Bot
+                </a>
             </div>
-            <p class="text-lg md:text-xl opacity-95">
-                Prinesite veselje glasbe na vaš Discord strežnik
-            </p>
-        </header>
+        </div>
+    </header>
 
-        <!-- Hero Section -->
-        <section class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 md:p-16 my-10 shadow-2xl border border-white/10 animate-fade-in-up">
-            <h2 class="text-3xl md:text-4xl font-bold mb-5">
-                Poslušaj Radio Veseljak na Discordu
-            </h2>
-            <p class="text-lg md:text-xl leading-relaxed opacity-90 mb-10">
-                RadioVeseljak Discord bot je namenski glasbeni bot, ki predvaja Radio Veseljak - priljubljeno slovensko radijsko postajo - neposredno na vaš Discord strežnik. Uživajte v najboljši slovenski glasbi 24/7 s kristalno čistim zvokom in brez prekinitev!
-            </p>
+    <main class="flex-grow">
+        
+        <!-- Hero Sekcija -->
+        <section class="relative pt-20 pb-24 overflow-hidden">
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-            <div class="flex gap-5 justify-center flex-wrap mt-8">
-                <a href="https://discord.com/oauth2/authorize?client_id=1373432110664384594&permissions=8&integration_type=0&scope=bot" class="btn-ripple relative px-8 md:px-10 py-4 md:py-5 text-base md:text-lg font-semibold bg-[#5865F2] rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 inline-flex items-center gap-2">
-                    <span class="relative z-10">
-                        <svg class="w-5 h-5 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                        Dodaj na Discord
-                    </span>
-                </a>
+            <div class="max-w-4xl mx-auto text-center px-6 relative z-10">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-accent/10 text-brand-accent mb-6 border border-brand-accent/20">
+                    <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span> 100% Brezplačen Glasbeni Bot
+                </span>
+                
+                <h1 class="text-5xl md:text-6xl font-black tracking-tight text-white mb-6 leading-[1.15]">
+                    Slovenska glasba neposredno na vašem <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-emerald-400">Discordu</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-brand-muted font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Uživajte v neprekinjenem prenosu Radia Veseljak v živo. Preprosto povabite bota v svoj glasovni kanal in ustvarite pravo slovensko vzdušje.
+                </p>
 
-                <a href="https://github.com/Jonontop/Radio-Veseljak-Discord-Bot" class="btn-ripple relative px-8 md:px-10 py-4 md:py-5 text-base md:text-lg font-semibold bg-[#23272A] rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 inline-flex items-center gap-2">
-                    <span class="relative z-10">
-                        <svg class="w-5 h-5 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        Poglej na GitHubu
-                    </span>
-                </a>
-
-                <a href="YOUR_SUPPORT_DISCORD_LINK" class="relative px-8 md:px-10 py-4 md:py-5 text-base md:text-lg font-semibold bg-transparent border-2 border-white/30 rounded-xl shadow-lg hover:bg-white/10 hover:border-white hover:-translate-y-1 transition-all duration-300 inline-flex items-center gap-2">
-                    <span>
-                        <svg class="w-5 h-5 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
-                        Podporni Strežnik
-                    </span>
-                </a>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1373432110664384594&permissions=8&integration_type=0&scope=bot" class="w-full sm:w-auto bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-extrabold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl shadow-brand-accent/10 hover:translate-y-[-2px]">
+                        Povabi Bota na Strežnik
+                    </a>
+                    <a href="javascript:void(0)" onclick="openModal('support-modal')" class="w-full sm:w-auto bg-dark-card hover:bg-slate-800 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 border border-dark-border">
+                        Pridruži se podpori
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- Features Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-16">
-            <!-- Feature Card 1 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold mb-4">Samo Radio Veseljak</h3>
-                <p class="opacity-90 leading-relaxed">Namenski bot za predvajanje Radio Veseljak. Najboljša slovenska glasba, novice in zabava 24 ur na dan.</p>
+        <!-- Razdelek s funkcijami -->
+        <section id="features" class="max-w-7xl mx-auto px-6 py-12 border-t border-dark-border/30">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-white mb-4">Kaj ponuja Veseljak Bot?</h2>
+                <p class="text-brand-muted max-w-lg mx-auto">Zasnovan z mislijo na stabilnost, hitrost in najboljšo uporabniško izkušnjo.</p>
             </div>
 
-            <!-- Feature Card 2 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                    </svg>
+            <!-- Grid kartic -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Kartica 1 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Samo Radio Veseljak</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Namenski bot, specializiran izključno za predvajanje Radia Veseljak. Najboljša slovenska domača glasba in zabava 24 ur na dan.</p>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Live Stream Radia Veseljak</h3>
-                <p class="opacity-90 leading-relaxed">Neposredno prenašanje v živo z Radio Veseljak. Brez zamud, brez prekinitev - samo čista glasba.</p>
-            </div>
 
-            <!-- Feature Card 3 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
-                    </svg>
+                <!-- Kartica 2 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Live Stream v Živo</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Neposreden in čist prenos signala neposredno iz radijskega studia. Brez nepotrebnih zamikov ali padcev kakovosti zvoka.</p>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Enostaven za Uporabo</h3>
-                <p class="opacity-90 leading-relaxed">Preprosti ukazi za predvajanje in ustavitev. Pridruži se glasovnemu kanalu in uživaj v Radiu Veseljak.</p>
-            </div>
 
-            <!-- Feature Card 4 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
-                    </svg>
+                <!-- Kartica 3 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Enostavna Uporaba</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Brez dolgih nastavitev ali zapletenih ukazov. Uporabite intuitivne gumbe ali preproste ukaze za takojšen zagon.</p>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Slovenska Radijska Postaja</h3>
-                <p class="opacity-90 leading-relaxed">Radio Veseljak - priljubljena slovenska radijska postaja zdaj na vašem Discord strežniku.</p>
-            </div>
 
-            <!-- Feature Card 5 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
+                <!-- Kartica 4 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Slovenska Radijska Postaja</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Pripeljite pristno domače vzdušje, slovenske polke, valčke in zabavno glasbo neposredno v svojo Discord skupnost.</p>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Hiter in Zanesljiv</h3>
-                <p class="opacity-90 leading-relaxed">Stabilna povezava in neprekinjeno predvajanje. Radio Veseljak vedno na voljo na vašem strežniku.</p>
-            </div>
 
-            <!-- Feature Card 6 -->
-            <div class="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center transition-all duration-300 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl border border-white/10">
-                <div class="text-3xl mb-5 opacity-80">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+                <!-- Kartica 5 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Hiter in Zanesljiv</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Gostuje na stabilnih in zmogljivih strežnikih, kar zagotavlja neprekinjeno delovanje brez zatikanja zvoka.</p>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Popolnoma Brezplačno</h3>
-                <p class="opacity-90 leading-relaxed">Brez stroškov, brez naročnin. Dodajte Radio Veseljak bot na svoj Discord strežnik brezplačno.</p>
+
+                <!-- Kartica 6 -->
+                <div class="bg-dark-card border border-dark-border/40 p-8 rounded-2xl flex flex-col hover:border-brand-accent/30 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-accent/5 flex items-center justify-center mb-6 border border-brand-accent/10 group-hover:bg-brand-accent/10 transition-colors">
+                        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-20c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 15.385 2.25 10 6.615 2.25 12 2.25z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Popolnoma Brezplačno</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed flex-grow">Brez skritih stroškov ali premijskih naročnin za osnovno delovanje. Brezplačno ga dodajte na svoj strežnik.</p>
+                </div>
+
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="text-center py-10 mt-16 opacity-80">
-            <p>&copy; 2025 RadioVeseljak. Narejeno z ❤️ za ljubitelje glasbe.</p>
-        </footer>
+        <!-- CTA Sekcija -->
+        <section class="max-w-5xl mx-auto px-6 py-16">
+            <div class="bg-gradient-to-r from-dark-card to-slate-900 border border-dark-border p-10 md:p-12 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-accent/10 rounded-full blur-3xl"></div>
+                
+                <div class="text-center md:text-left relative z-10">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Pripravljeni na pravo zabavo?</h2>
+                    <p class="text-brand-muted text-base md:text-lg">Dodajte bota z enim klikom in zaženite glasbo.</p>
+                </div>
+                
+                <div class="relative z-10 w-full md:w-auto">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1373432110664384594&permissions=8&integration_type=0&scope=bot" class="block text-center w-full md:w-auto bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-extrabold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl shadow-brand-accent/10">
+                        Povabi Bota
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-dark-border/40 bg-dark-bg text-brand-muted text-sm py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Logo v nogi -->
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full overflow-hidden opacity-80">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA33i7LANDx4IHCBNJKzC2orbPPY7jEwkXWJen-cdBW4N14xB7wuIclFaK&s=10" 
+                         alt="Veseljak Logo" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="flex flex-col text-left">
+                    <span class="text-sm font-extrabold tracking-wide text-white leading-none">VESELJAK</span>
+                    <span class="text-[10px] font-semibold tracking-wider text-brand-accent">RADIO BOT</span>
+                </div>
+            </div>
+
+            <!-- Pravne in podporne povezave (Odpirajo popup) -->
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-medium">
+                <a href="javascript:void(0)" onclick="openModal('support-modal')" class="hover:text-white transition-colors">Podpora</a>
+                <a href="javascript:void(0)" onclick="openModal('tos-modal')" class="hover:text-white transition-colors">Splošni pogoji (ToS)</a>
+                <a href="javascript:void(0)" onclick="openModal('privacy-modal')" class="hover:text-white transition-colors">Pravilnik o zasebnosti (PP)</a>
+            </div>
+
+            <div class="text-xs text-slate-500">
+                &copy; 2026 Veseljak Radio Bot. Vse pravice pridržane.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- POPUP OKNA (MODALI) SECTION -->
+    <!-- ========================================== -->
+
+    <!-- Modal 1: Splošni Pogoji (ToS) -->
+    <div id="tos-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <!-- Zatemnjeno ozadje -->
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"></div>
+        
+        <!-- Vsebina modala -->
+        <div class="relative bg-dark-card border border-dark-border max-w-2xl w-full rounded-2xl shadow-2xl p-6 md:p-8 z-10 flex flex-col max-h-[85vh] transform scale-95 opacity-0 transition-all duration-300 ease-out" id="tos-modal-content">
+            <!-- Glava modala -->
+            <div class="flex items-center justify-between pb-4 border-b border-dark-border">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="text-brand-accent">📜</span> Splošni pogoji uporabe (ToS)
+                </h3>
+                <button onclick="closeModal('tos-modal')" class="text-brand-muted hover:text-white text-2xl font-semibold leading-none p-1">&times;</button>
+            </div>
+            
+            <!-- Vsebina s custom scrollbarom -->
+            <div class="overflow-y-auto my-6 pr-2 custom-scrollbar text-sm text-brand-muted space-y-4 leading-relaxed">
+                <p class="text-white font-medium">Zadnja posodobitev: Julij 2026</p>
+                <p>Dobrodošli pri uporabi bota <strong>Veseljak Radio Bot</strong>. Preden dodate bota na svoj strežnik, natančno preberite spodnje pogoje uporabe.</p>
+                
+                <h4 class="text-white font-semibold text-base mt-4">1. Sprejetje pogojev</h4>
+                <p>Z povabilom bota na vaš Discord strežnik ali uporabo njegovih funkcij v celoti sprejemate te pogoje. Če se s katerim koli delom pogojev ne strinjate, bota nemudoma odstranite iz svojega strežnika.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">2. Dovoljena uporaba</h4>
+                <p>Bot je namenjen izključno predvajanju javno dostopnega radijskega signala Radia Veseljak znotraj platforme Discord. Prepovedano je kakršno koli zlorabljanje storitve, preobremenjevanje strežnikov, poskus spreminjanja izvorne kode ali uporaba bota v zlonamerne namene.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">3. Omejitev odgovornosti</h4>
+                <p>Storitev se zagotavlja "takšna, kot je" (as-is), brez kakršnih koli neposrednih ali posrednih jamstev. Razvijalci ne odgovarjamo za morebitne občasne prekinitve delovanja, izgubo povezave ali nedelovanje radijskega toka, saj so te storitve odvisne od tretjih ponudnikov (Discord API in Radio Veseljak prenos).</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">4. Avtorske pravice</h4>
+                <p>Veseljak Radio Bot je skupnostni/fan-made projekt in ni uradno povezan z medijsko hišo Radio Veseljak. Vse avtorske pravice radijskega programa, logotipov in blagovnih znamk v celoti pripadajo njihovim zakonitim lastnikom.</p>
+            </div>
+
+            <!-- Gumb za zapiranje spodaj -->
+            <div class="pt-4 border-t border-dark-border flex justify-end">
+                <button onclick="closeModal('tos-modal')" class="bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-bold px-6 py-2.5 rounded-lg text-sm transition-all duration-150">
+                    Razumem in zapri
+                </button>
+            </div>
+        </div>
     </div>
+
+    <!-- Modal 2: Pravilnik o zasebnosti (PP) -->
+    <div id="privacy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"></div>
+        
+        <div class="relative bg-dark-card border border-dark-border max-w-2xl w-full rounded-2xl shadow-2xl p-6 md:p-8 z-10 flex flex-col max-h-[85vh] transform scale-95 opacity-0 transition-all duration-300 ease-out" id="privacy-modal-content">
+            <div class="flex items-center justify-between pb-4 border-b border-dark-border">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="text-brand-accent">🔒</span> Pravilnik o zasebnosti (PP)
+                </h3>
+                <button onclick="closeModal('privacy-modal')" class="text-brand-muted hover:text-white text-2xl font-semibold leading-none p-1">&times;</button>
+            </div>
+            
+            <div class="overflow-y-auto my-6 pr-2 custom-scrollbar text-sm text-brand-muted space-y-4 leading-relaxed">
+                <p class="text-white font-medium">Zadnja posodobitev: Julij 2026</p>
+                <p>Zasebnost uporabnikov je naša glavna prioriteta. Ta pravilnik pojasnjuje, kako Veseljak Radio Bot ravna s podatki na vaši Discord platformi.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">1. Zbiranje osebnih podatkov</h4>
+                <p>Bot <strong>ne zbira, ne snema in ne shranjuje</strong> vaših zvočnih pogovorov, besedilnih sporočil ali osebnih podatkov uporabnikov. Deluje popolnoma anonimno.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">2. Tehnični podatki za delovanje</h4>
+                <p>Za zagotavljanje povezave z glasovnim kanalom bot začasno procesira zgolj nujne Discord metapodatke (npr. ID strežnika, ID kanala in status povezave). Ti podatki se obdelujejo izključno v pomnilniku (RAM-u) bota in se nikoli trajno ne zapisujejo v podatkovne baze.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">3. Posredovanje tretjim osebam</h4>
+                <p>Ker bot ne shranjuje nobenih vaših podatkov, teh podatkov ni mogoče deliti, prodati ali posredovati tretjim osebam ali oglaševalcem.</p>
+
+                <h4 class="text-white font-semibold text-base mt-4">4. Nadzor uporabnika</h4>
+                <p>Kot skrbnik strežnika imate popoln nadzor nad botom. Kadarkoli lahko bota odstranite (kick ali ban) iz vašega strežnika, s čimer nemudoma prekinete vso komunikacijo in prenos podatkov.</p>
+            </div>
+
+            <div class="pt-4 border-t border-dark-border flex justify-end">
+                <button onclick="closeModal('privacy-modal')" class="bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-bold px-6 py-2.5 rounded-lg text-sm transition-all duration-150">
+                    Zapri
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Podpora / Support Info -->
+    <div id="support-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"></div>
+        
+        <div class="relative bg-dark-card border border-dark-border max-w-md w-full rounded-2xl shadow-2xl p-6 md:p-8 z-10 flex flex-col transform scale-95 opacity-0 transition-all duration-300 ease-out" id="support-modal-content">
+            <div class="flex items-center justify-between pb-4 border-b border-dark-border">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="text-brand-accent">💬</span> Podpora in kontakt
+                </h3>
+                <button onclick="closeModal('support-modal')" class="text-brand-muted hover:text-white text-2xl font-semibold leading-none p-1">&times;</button>
+            </div>
+            
+            <div class="my-6 text-sm text-brand-muted space-y-4">
+                <p>Naleteli na težave ali imate predlog za izboljšavo? Pridružite se naši uradni Discord skupnosti za podporo ali obiščite naš GitHub repozitorij.</p>
+                
+                <div class="space-y-2 mt-4">
+                    <a href="#discord-server-link" class="flex items-center justify-between p-3 rounded-xl bg-dark-bg border border-dark-border hover:border-brand-accent transition-colors group">
+                        <span class="text-white font-medium">Uradni Discord Strežnik</span>
+                        <span class="text-brand-accent group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                    <a href="https://github.com/Jonontop/Radio-Veseljak-Discord-Bot" class="flex items-center justify-between p-3 rounded-xl bg-dark-bg border border-dark-border hover:border-brand-accent transition-colors group">
+                        <span class="text-white font-medium">GitHub Repozitorij</span>
+                        <span class="text-brand-accent group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-dark-border flex justify-end">
+                <button onclick="closeModal('support-modal')" class="bg-brand-accent hover:bg-brand-accent/90 text-dark-bg font-bold px-6 py-2.5 rounded-lg text-sm transition-all duration-150">
+                    Zapri
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIKA ZA POPUPE -->
+    <!-- ========================================== -->
+    <script>
+        // Odpiranje modala
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = document.getElementById(modalId + '-content');
+            
+            // Prikaži modal in onemogoči pomikanje po strani
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+            
+            // Sproži gladek "fade & scale" učinek
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Zapiranje modala
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = document.getElementById(modalId + '-content');
+            
+            // Sproži gladek izhodni učinek
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 200); // Počakaj, da se animacija zaključi
+        }
+
+        // Zapiranje modala s klikom na zatemnjeno ozadje
+        document.querySelectorAll('[id$="-modal"]').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+
+        // Zapiranje modala s pritiskom na tipko ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const openModalEl = document.querySelector('[id$="-modal"]:not(.hidden)');
+                if (openModalEl) {
+                    closeModal(openModalEl.id);
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>

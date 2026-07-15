@@ -1,11 +1,13 @@
 #Radio Veseljak Discord Bot
 
 ```py
+import os
 import discord
+from discord import app_commands
 from discord.ext import commands
 
-TOKEN = "TOKEN_HERE"
-RADIO_URL = "https://live.radio.si/Veseljak?t=1758375904462"  # Example radio stream
+TOKEN = os.getenv("DISCORD_TOKEN")
+RADIO_URL = "https://live.radio.si/Veseljak?t=1758375904462"  # Radio stream
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -15,15 +17,28 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
+    try:
+        # Avtomatska sinhronizacija slash ukazov ob zagonu bota
+        synced = await bot.tree.sync()
+        print(f"🔄 Uspešno sinhroniziral {len(synced)} slash ukazov!")
+    except Exception as e:
+        print(f"❌ Napaka pri sinhronizaciji ukazov: {e}")
 
 
-@bot.command()
-async def radio(ctx):
-    if not ctx.author.voice:
-        return await ctx.send("❌ Bejži v vc če me hočš čut gustek en!")
+@bot.tree.command(name="radio", description="Zaženi radio Veseljak!")
+async def radio(interaction: discord.Interaction):
+    # Pri slash ukazih uporabljamo interaction.user namesto ctx.author
+    if not interaction.user.voice:
+        return await interaction.response.send_message(
+            "❌ Bejži v vc če me hočš čut gustek en!", 
+            ephemeral=True  # Ukaz vidi samo tisti, ki ga je poslal
+        )
 
-    channel = ctx.author.voice.channel
-    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+    channel = interaction.user.voice.channel
+    voice = discord.utils.get(bot.voice_clients, guild=interaction.guild)
+
+    # Najprej pošljemo odgovor Discordu, da ne poteče čas (timeout)
+    await interaction.response.send_message("📻 Zej ga pam, uživaj!")
 
     if not voice:
         voice = await channel.connect()
@@ -36,17 +51,20 @@ async def radio(ctx):
         discord.FFmpegPCMAudio(RADIO_URL),
         after=lambda e: print("Radio stream ended:", e),
     )
-    await ctx.send("📻 Zej ga pam, uživaj!")
 
 
-@bot.command()
-async def stop(ctx):
-    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+@bot.tree.command(name="stop", description="Ugasni radio in me vrzi ven")
+async def stop(interaction: discord.Interaction):
+    voice = discord.utils.get(bot.voice_clients, guild=interaction.guild)
+    
     if voice and voice.is_connected():
         await voice.disconnect()
-        await ctx.send("⏹️ Ugasnil sem radio, adijo!")
+        await interaction.response.send_message("⏹️ Ugasnil sem radio, adijo!")
     else:
-        await ctx.send("⚠️ Gustek... nisem v vc.")
+        await interaction.response.send_message(
+            "⚠️ Gustek... nisem v vc.", 
+            ephemeral=True
+        )
 
 
 bot.run(TOKEN)
